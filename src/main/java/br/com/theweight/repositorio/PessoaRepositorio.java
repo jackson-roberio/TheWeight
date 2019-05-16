@@ -13,6 +13,8 @@ public interface PessoaRepositorio extends Repository<Pessoa, Long>  {
 	@Query("select p from Pessoa p")
 	public Pessoa buscarUnicaPessoa();
 	
-	
+	public Pessoa save(Pessoa pessoa);
+
+	public Pessoa findById(Long id);
 	
 }

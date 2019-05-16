@@ -1,12 +1,19 @@
 package br.com.theweight.recurso;
 
+import java.net.URI;
 import java.util.List;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.theweight.entidade.Mudanca;
 import br.com.theweight.entidade.Pessoa;
@@ -59,5 +66,37 @@ public class PrincipalRecurso {
 		return mudancaRepositorio.findAllOrderByData();
 	}
 	
-	//TODO: Preciso implementar os dois Post's, para inclusão de novo usuário e para inclusão de novo peso.
+	@GetMapping(value = "/pessoa/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Pessoa buscarPessoaPorId(@PathVariable Long id) {
+		return pessoaRepositorio.findById(id);
+	}
+	
+	@GetMapping(value = "/mudanca/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Pessoa buscarMudancaPorId(@PathVariable Long id) {
+		return mudancaRepositorio.findById(id);
+	}
+	
+	
+	@Transactional
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Pessoa> inserirPessoa(@RequestBody Pessoa pessoa, UriComponentsBuilder uriBuilder){
+		Pessoa pessoaRetorno = pessoaRepositorio.save(pessoa);
+		
+		URI path = uriBuilder.path("/api/pessoa/{id}").buildAndExpand(pessoaRetorno.getId()).toUri();
+
+		return ResponseEntity.created(path).body(pessoaRetorno);
+	}
+	
+	
+	//TODO: Creio que ele vai da conflito com o post de inserirPessoa, se caso acontecer, tem que colocar o value = ".."
+	@Transactional
+	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Mudanca> inserirMudanca(@RequestBody Mudanca mudanca, UriComponentsBuilder uriBuilder){
+		Mudanca mudancaRetorno = mudancaRepositorio.save(mudanca);
+		
+		URI path = uriBuilder.path("/api/mudanca/{id}").buildAndExpand(mudancaRetorno.getId()).toUri();
+
+		return ResponseEntity.created(path).body(mudancaRetorno);
+	}
+	
 }
