@@ -84,7 +84,7 @@ public class MudancaRecurso {
 	public ResponseEntity<Mudanca> inserirMudanca(@RequestBody Mudanca mudanca, UriComponentsBuilder uriBuilder){
 		Mudanca mudancaRetorno = mudancaRepositorio.save(mudanca);
 		
-		URI path = uriBuilder.path("/api/mudanca/{id}").buildAndExpand(mudancaRetorno.getId()).toUri();
+		URI path = uriBuilder.path("/api/m/{id}").buildAndExpand(mudancaRetorno.getId()).toUri();
 
 		return ResponseEntity.created(path).body(mudancaRetorno);
 	}

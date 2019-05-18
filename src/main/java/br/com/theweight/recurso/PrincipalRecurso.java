@@ -48,7 +48,7 @@ public class PrincipalRecurso {
 	public ResponseEntity<Pessoa> inserirPessoa(@RequestBody Pessoa pessoa, UriComponentsBuilder uriBuilder){
 		Pessoa pessoaRetorno = pessoaRepositorio.save(pessoa);
 		
-		URI path = uriBuilder.path("/api/pessoa/{id}").buildAndExpand(pessoaRetorno.getId()).toUri();
+		URI path = uriBuilder.path("/api/p/pessoa/{id}").buildAndExpand(pessoaRetorno.getId()).toUri();
 
 		return ResponseEntity.created(path).body(pessoaRetorno);
 	}
