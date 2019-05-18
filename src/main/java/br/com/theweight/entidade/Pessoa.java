@@ -2,13 +2,16 @@ package br.com.theweight.entidade;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class Pessoa {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pessoa_sequence")
+	@SequenceGenerator(name="pessoa_sequence", sequenceName = "pessoa_sequence", allocationSize=1)
 	private Long id;
 	
 	private String nome;

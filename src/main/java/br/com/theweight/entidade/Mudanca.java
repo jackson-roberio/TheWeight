@@ -1,15 +1,20 @@
 package br.com.theweight.entidade;
 
 import java.time.LocalDate;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class Mudanca {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mudanca_sequence")
+//	@SequenceGenerator(name="mudanca_sequence", sequenceName = "mudanca_sequence", allocationSize=1)
 	private Long id;
 	
 	private LocalDate data;
