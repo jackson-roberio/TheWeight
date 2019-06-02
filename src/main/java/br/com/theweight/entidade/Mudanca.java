@@ -21,7 +21,15 @@ public class Mudanca {
 	
 	private int peso;
 
+	@Deprecated
+	public Mudanca() {}
 	
+	
+	
+	public Mudanca(int peso, LocalDate data) {
+		this.peso = peso;
+		this.data = data;
+	}
 	
 	public Long getId() {
 		return id;

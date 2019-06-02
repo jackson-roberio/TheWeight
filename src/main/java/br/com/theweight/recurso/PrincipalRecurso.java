@@ -1,4 +1,4 @@
-package br.com.theweight.recurso;
+ package br.com.theweight.recurso;
 
 import java.net.URI;
 import java.util.List;
@@ -29,8 +29,11 @@ public class PrincipalRecurso {
 	@Autowired
 	private PessoaRepositorio pessoaRepositorio;
 	
-	
-	
+	//Avalia se é o primeiro cadastro do usuário, para saber se precisa fazer o primeiro cadastro ou não.
+	@GetMapping(value = "/primeiro-cadastro", produces = MediaType.APPLICATION_JSON_VALUE)
+	public boolean isPrimeiroCadastro(){
+		 return pessoaRepositorio.findFirstByOrderById() == null;
+	}
 	
 	
 	@GetMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)

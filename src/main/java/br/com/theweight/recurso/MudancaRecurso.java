@@ -1,6 +1,7 @@
 package br.com.theweight.recurso;
 
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 import br.com.theweight.entidade.Mudanca;
 import br.com.theweight.entidade.Pessoa;
+import br.com.theweight.entidade.dto.MudancaPesoInputDTO;
 import br.com.theweight.entidade.enums.StatusDoMes;
 import br.com.theweight.repositorio.MudancaRepositorio;
 import br.com.theweight.repositorio.PessoaRepositorio;
@@ -83,6 +85,17 @@ public class MudancaRecurso {
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Mudanca> inserirMudanca(@RequestBody Mudanca mudanca, UriComponentsBuilder uriBuilder){
 		Mudanca mudancaRetorno = mudancaRepositorio.save(mudanca);
+		
+		URI path = uriBuilder.path("/api/m/{id}").buildAndExpand(mudancaRetorno.getId()).toUri();
+
+		return ResponseEntity.created(path).body(mudancaRetorno);
+	}
+	
+	@Transactional
+	@PostMapping(value = "/hoje" , consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Mudanca> inserirMudancaHoje(@RequestBody MudancaPesoInputDTO mudanca, UriComponentsBuilder uriBuilder){
+		Mudanca m = new Mudanca(mudanca.getPeso(), LocalDate.now());
+		Mudanca mudancaRetorno = mudancaRepositorio.save(m);
 		
 		URI path = uriBuilder.path("/api/m/{id}").buildAndExpand(mudancaRetorno.getId()).toUri();
 
