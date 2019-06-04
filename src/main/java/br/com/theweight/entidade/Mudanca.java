@@ -6,7 +6,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class Mudanca {
@@ -17,6 +20,8 @@ public class Mudanca {
 //	@SequenceGenerator(name="mudanca_sequence", sequenceName = "mudanca_sequence", allocationSize=1)
 	private Long id;
 	
+	@JsonFormat(pattern="dd/MM/yyyy")
+	@DateTimeFormat(iso = DateTimeFormat.ISO.TIME)
 	private LocalDate data;
 	
 	private int peso;
