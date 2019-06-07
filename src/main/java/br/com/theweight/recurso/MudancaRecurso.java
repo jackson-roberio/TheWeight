@@ -112,7 +112,7 @@ public class MudancaRecurso {
 	@Transactional
 	@PostMapping(value = "excluir/tudo")
 	public ResponseEntity<Void> excluirTudo() {
-		mudancaRepositorio.delete();
+		mudancaRepositorio.deleteAll();
 		return ResponseEntity.noContent().build();
 	}
 

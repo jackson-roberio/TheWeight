@@ -18,7 +18,6 @@ public interface MudancaRepositorio extends Repository<Mudanca, Long>  {
 	
 	public void deleteById(Long id);
 	
-	public void delete();
 
 	public Pessoa findById(Long id);
 }
