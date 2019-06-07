@@ -15,6 +15,10 @@ public interface MudancaRepositorio extends Repository<Mudanca, Long>  {
 	public List<Mudanca> findAll(Sort sort);
 	
 	public Mudanca save(Mudanca mudanca);
+	
+	public void deleteById(Long id);
+	
+	public void delete();
 
 	public Pessoa findById(Long id);
 }

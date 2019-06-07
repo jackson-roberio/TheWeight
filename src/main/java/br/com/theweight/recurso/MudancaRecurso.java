@@ -101,4 +101,19 @@ public class MudancaRecurso {
 
 		return ResponseEntity.created(path).body(mudancaRetorno);
 	}
+	
+	@Transactional
+	@PostMapping(value = "excluir/{id}")
+	public ResponseEntity<Void> excluirMudanca(@PathVariable Long id) {
+		mudancaRepositorio.deleteById(id);
+		return ResponseEntity.noContent().build();
+	}
+	
+	@Transactional
+	@PostMapping(value = "excluir/tudo")
+	public ResponseEntity<Void> excluirTudo() {
+		mudancaRepositorio.delete();
+		return ResponseEntity.noContent().build();
+	}
+
 }
